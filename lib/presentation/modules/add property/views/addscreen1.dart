@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:universe_it_project/widgets/back_app_bar.dart';
+import 'package:universe_it_project/widgets/dropdown.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_dropdown.dart';
 import '../../../../widgets/custom_text.dart';
@@ -15,7 +17,7 @@ class Addscreen1 extends StatelessWidget {
   Addscreen1({super.key, required this.pageController});
 
   final controller = Get.put(Addpage1Controller());
-  final addcontroller = Get.put(AddPropertyController());
+  final addcontroller = Get.put(AddController());
   final formkey = GlobalKey<FormState>();
 
   @override
@@ -29,43 +31,34 @@ class Addscreen1 extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Get.back(),
-                      icon: const Icon(Icons.arrow_back_ios),
-                    ),
-                    const CustomText(
-                      text: "Add Property",
-                      fontsize: 20.0,
-                      fontweight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-                const Divider(),
-                const CustomTextIcon(text: "Property for"),
-                const SizedBox(height: 5.0),
-                const Row(
-                  children: [
-                    Icon(Icons.radio_button_on, color: Colors.blueAccent),
-                    CustomText(text: "  Sell"),
-                  ],
-                ),
-                const SizedBox(height: 15.0),
+                SizedBox(height: 20.0),
 
-                // PROPERTY TYPE
+                CustomText(
+                  text: 'Basic Information',
+                  fontsize: 22.0,
+                ),
                 const CustomTextIcon(text: "Property type"),
+
                 DropdownWidget(
                   dropDownList: const [
-                    DropDownValueModel(name: 'Apartment/Flats', value: "Apartment/Flats"),
-                    DropDownValueModel(name: 'Independent House', value: "Independent House"),
-                    DropDownValueModel(name: 'Duplex/Home', value: "Duplex/Home"),
-                    DropDownValueModel(name: 'Shop/Restaurant', value: "Shop/Restaurant"),
-                    DropDownValueModel(name: 'Office Space', value: "Office Space"),
-                    DropDownValueModel(name: 'Industrial Space', value: "Industrial Space"),
-                    DropDownValueModel(name: 'Residential Plot', value: "Residential Plot"),
-                    DropDownValueModel(name: 'Commercial Plot', value: "Commercial Plot"),
-                    DropDownValueModel(name: 'Agriculture/Firm', value: "Agriculture/Firm"),
+                    DropDownValueModel(
+                        name: 'Apartment/Flats', value: "Apartment/Flats"),
+                    DropDownValueModel(
+                        name: 'Independent House', value: "Independent House"),
+                    DropDownValueModel(
+                        name: 'Duplex/Home', value: "Duplex/Home"),
+                    DropDownValueModel(
+                        name: 'Shop/Restaurant', value: "Shop/Restaurant"),
+                    DropDownValueModel(
+                        name: 'Office Space', value: "Office Space"),
+                    DropDownValueModel(
+                        name: 'Industrial Space', value: "Industrial Space"),
+                    DropDownValueModel(
+                        name: 'Residential Plot', value: "Residential Plot"),
+                    DropDownValueModel(
+                        name: 'Commercial Plot', value: "Commercial Plot"),
+                    DropDownValueModel(
+                        name: 'Agriculture/Firm', value: "Agriculture/Firm"),
                   ],
                   hintText: "Select an item",
                   enablesearch: false,
@@ -75,18 +68,41 @@ class Addscreen1 extends StatelessWidget {
                     controller.updatePropertyType(value.value);
                   },
                 ),
-                const SizedBox(height: 15.0),
 
-                // CONSTRUCTION STATUS
+                const CustomTextIcon(text: "City"),
+                DropdownWidget(
+                  dropDownList: const [
+                    DropDownValueModel(name: 'Dhaka', value: "Dhaka"),
+                    DropDownValueModel(name: 'Thakurgaon', value: "Thakurgaon"),
+                    DropDownValueModel(name: 'Chattagram', value: "Chattagram"),
+                  ],
+                  hintText: "Select an item",
+                  enablesearch: false,
+                  controller: controller.typeController,
+                ),
+                const CustomTextIcon(text: "Area"),
+                DropdownWidget(
+                  dropDownList: const [
+                    DropDownValueModel(name: 'Dhaka', value: "Dhaka"),
+                    DropDownValueModel(name: 'Thakurgaon', value: "Thakurgaon"),
+                    DropDownValueModel(name: 'Chattagram', value: "Chattagram"),
+                  ],
+                  hintText: "Select an item",
+                  enablesearch: false,
+                  controller: controller.typeController,
+                ),
                 const CustomTextIcon(text: "Construction Status"),
                 DropdownWidget(
                   dropDownList: const [
                     DropDownValueModel(name: 'Any', value: "Any"),
                     DropDownValueModel(name: 'Ready', value: "Ready"),
-                    DropDownValueModel(name: 'Under Construction', value: "Under Construction"),
+                    DropDownValueModel(
+                        name: 'Under Construction',
+                        value: "Under Construction"),
                     DropDownValueModel(name: 'Used', value: "Used"),
                     DropDownValueModel(name: 'Upcoming', value: "Upcoming"),
-                    DropDownValueModel(name: 'Almost Ready', value: "Almost Ready"),
+                    DropDownValueModel(
+                        name: 'Almost Ready', value: "Almost Ready"),
                   ],
                   controller: controller.statusController,
                   hintText: "Select an item",
@@ -95,9 +111,6 @@ class Addscreen1 extends StatelessWidget {
                     addcontroller.status.value = value.value;
                   },
                 ),
-                const SizedBox(height: 15.0),
-
-                // ADDRESS
                 const CustomTextIcon(text: "Address"),
                 ReusableTextField(
                   hintText: 'Type Address',
@@ -107,26 +120,25 @@ class Addscreen1 extends StatelessWidget {
                     addcontroller.addressName.value = value;
                   },
                 ),
-                const SizedBox(height: 15.0),
 
-                // PROPERTY NAME
-                const CustomTextIcon(text: "Enter Property Name"),
+                const CustomTextIcon(text: "Property Name"),
                 ReusableTextField(
-                  hintText: 'Enter Property name',
+                  hintText: 'Property name',
                   maxLines: 2,
                   controller: controller.propertyNameController,
                   onchanged: (value) {
                     addcontroller.propertyName.value = value;
                   },
                 ),
+
+                /// Property Size and pricing...
                 const SizedBox(height: 15.0),
+                CustomText(
+                  text: 'Property Size & Pricing',
+                  fontsize: 22.0,
+                ),
 
-                // PRICING & SIZE
-                const CustomText(text: "Properties Size & Pricing"),
-                const SizedBox(height: 5.0),
-
-                // SIZE
-                const CustomTextIcon(text: "Property size (sft)"),
+                const CustomTextIcon(text: "Property Size in sftd"),
                 ReusableTextField(
                   hintText: "Property size in sft",
                   keyboardtype: TextInputType.number,
@@ -135,10 +147,17 @@ class Addscreen1 extends StatelessWidget {
                     addcontroller.size.value = value;
                   },
                 ),
-                const SizedBox(height: 15.0),
+                const CustomTextIcon(text: "Price per sft"),
+                ReusableTextField(
+                  hintText: "Price per sft",
+                  keyboardtype: TextInputType.number,
+                  controller: controller.sizesftController,
+                  onchanged: (value) {
+                    addcontroller.size.value = value;
+                  },
+                ),
 
-                // UTILITY COST
-                const CustomTextIcon(text: "Utility & Other Costs"),
+                const CustomTextIcon(text: "Utility & Other Cost"),
                 ReusableTextField(
                   hintText: 'If any other costs',
                   keyboardtype: TextInputType.number,
@@ -147,9 +166,6 @@ class Addscreen1 extends StatelessWidget {
                     addcontroller.utilityCost.value = value;
                   },
                 ),
-                const SizedBox(height: 15.0),
-
-                // TOTAL PRICE
                 const CustomTextIcon(text: "Total Price"),
                 ReusableTextField(
                   hintText: 'Total price',
@@ -160,6 +176,51 @@ class Addscreen1 extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 15.0),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: RadioListTile<String>(
+                          activeColor: Colors.amber,
+                          contentPadding: EdgeInsets.zero,
+                          title: Text('Fixed'),
+                          value: 'Fixed',
+                          groupValue: addcontroller.priceIs.value,
+                          onChanged: (value) {
+                            if (value != null) {
+                              addcontroller.setSelectedOption(value);
+                            }
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Flexible(
+                        flex: 2,
+                        child: RadioListTile<String>(
+                          activeColor: Colors.amber,
+                          contentPadding: EdgeInsets.zero,
+                          title: Text('Negotiatable'),
+                          value: 'Negotiatable',
+                          groupValue: addcontroller.priceIs.value,
+                          onChanged: (value) {
+                            if (value != null) {
+                              addcontroller.setSelectedOption(value);
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                /// Property Basic Features...
+                const SizedBox(height: 15.0),
+                CustomText(
+                  text: 'Property Basic Features',
+                  fontsize: 22.0,
+                ),
 
                 // BEDROOM
                 if (controller.propertyvalue.value) ...[
@@ -241,7 +302,7 @@ class Addscreen1 extends StatelessWidget {
 
                 // NEXT BUTTON
                 CustomButton(
-                  text: "Next",
+                  text: "Continue",
                   ontap: () {
                     if (formkey.currentState!.validate()) {
                       pageController.nextPage(
@@ -249,7 +310,8 @@ class Addscreen1 extends StatelessWidget {
                         curve: Curves.easeInOut,
                       );
                       Fluttertoast.showToast(
-                        msg: "${addcontroller.addressName.value} ${addcontroller.propertyName.value}",
+                        msg:
+                            "${addcontroller.addressName.value} ${addcontroller.propertyName.value}",
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
                       );

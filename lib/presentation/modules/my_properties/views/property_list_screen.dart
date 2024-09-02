@@ -25,7 +25,7 @@ class PropertyListScreen extends StatelessWidget {
           elevation: 4,
           bottom: TabBar(
             isScrollable: true,
-            indicatorColor: Colors.white,
+            indicatorColor: Colors.transparent,
             indicatorWeight: 4.0,
             labelStyle: const TextStyle(
               fontSize: 16.0,

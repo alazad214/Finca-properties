@@ -1,118 +1,100 @@
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../../../utils/app_color.dart';
-import '../../../../widgets/custom_dialog.dart';
-import '../../../../widgets/custom_text.dart';
 
 class PendingProperties extends StatelessWidget {
   const PendingProperties({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.of(context).size.width;
+    final List<Map<String, dynamic>> data = [
+      {'sl': 1, 'id': '001', 'name': 'John Doe', 'visitors': 25},
+      {'sl': 2, 'id': '002', 'name': 'Jane Smith', 'visitors': 30},
+      {'sl': 3, 'id': '003', 'name': 'Bob Johnson', 'visitors': 40},
+    ];
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            for (int i = 0; i < 4; i++)
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 120,
-                  clipBehavior: Clip.antiAlias,
-                  margin: const EdgeInsets.only(
-                      left: 10.0, top: 10.0, right: 10.0, bottom: 10.0),
-                  decoration: BoxDecoration(
-                    color: AppColor.white,
-                    borderRadius: BorderRadius.circular(6.0),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        spreadRadius: 1.0,
-                        blurRadius: 8.0,
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(
-                        "assets/images/flat3.jpg",
-                        width: w / 3.5,
-                        fit: BoxFit.cover,
-                        height: 120,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceAround,
-                            children: [
-                              CustomText(
-                                text: "1770 sqrt Rampura flat",
-                                color: Colors.black,
-                                maxline: 2,
-                                fontsize: 16.0,
-                              ),
-                              CustomText(
-                                text: "Modhu flat",
-                                color: Colors.black38,
-                                fontsize: 12.0,
-                              ),
-                              CustomText(
-                                text: "Aftabnagar, Badda, Dhaka",
-                                color: Colors.black38,
-                                fontsize: 12.0,
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding:
-                                EdgeInsets.symmetric(horizontal: 15.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Icon(
-                                      Icons.edit,
-                                      color: Colors.green,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              CustomDialog(
-                                                title: 'Do you now delete post',
-                                                onConfirm: () {
-                                                  Navigator.pop(context);
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                      "Successfully Delete.");
-                                                },
-                                              ),
-                                        );
-                                      },
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12.withOpacity(0.1),
+                  spreadRadius: 3,
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: DataTable(
+              columnSpacing: 20.0,
+              headingRowColor: WidgetStateColor.resolveWith(
+                      (states) => Colors.deepPurple.shade50),
+              columns: const [
+                DataColumn(
+                  label: Text(
+                    'S.L. No',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
                   ),
                 ),
-              ),
-          ],
+                DataColumn(
+                  label: Text(
+                    'ID',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Visitors',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+              ],
+              rows: data.map((item) {
+                return DataRow(
+                  cells: [
+                    DataCell(Text(
+                      item['sl'].toString(),
+                      style: const TextStyle(fontSize: 14.0),
+                    )),
+                    DataCell(Text(
+                      item['id'],
+                      style: const TextStyle(fontSize: 14.0),
+                    )),
+                    DataCell(Text(
+                      item['name'],
+                      style: const TextStyle(fontSize: 14.0),
+                    )),
+                    DataCell(Text(
+                      item['visitors'].toString(),
+                      style: const TextStyle(fontSize: 14.0),
+                    )),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
         ),
       ),
     );

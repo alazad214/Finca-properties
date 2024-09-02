@@ -23,7 +23,7 @@ class AllPropertyHomepageCard extends StatelessWidget {
 
           ///Property Card...
           SizedBox(
-            height: 220,
+            height: 230,
             child: ListView.builder(
               itemCount: propertyData.length > 2 ? 2 : propertyData.length,
               scrollDirection: Axis.horizontal,
@@ -40,7 +40,6 @@ class AllPropertyHomepageCard extends StatelessWidget {
                   },
                   child: Container(
                     width: 210.0,
-                    height: 200,
                     margin: const EdgeInsets.only(right: 30.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
@@ -50,6 +49,7 @@ class AllPropertyHomepageCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Stack(
+                          clipBehavior: Clip.none,
                           children: [
                             ///Images...
                             Container(
@@ -86,7 +86,7 @@ class AllPropertyHomepageCard extends StatelessWidget {
 
                             ///Property Type ...
                             Positioned(
-                                left: 0,
+                                left: -5,
                                 bottom: 10,
                                 child: Container(
                                   padding: EdgeInsets.all(5.0),
@@ -96,7 +96,7 @@ class AllPropertyHomepageCard extends StatelessWidget {
                                           topRight: Radius.circular(10),
                                           bottomLeft: Radius.circular(10.0))),
                                   child: Text(
-                                    "Duplex Housing",
+                                    "৳ ${"10000"}",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 )),
@@ -116,6 +116,17 @@ class AllPropertyHomepageCard extends StatelessWidget {
                                 maxline: 2,
                                 fontsize: 14.0,
                               ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 2),
+                                decoration:
+                                    BoxDecoration(color: Colors.deepOrange),
+                                child: const CustomText(
+                                  text: "Duplex Housing",
+                                  color: Colors.white,
+                                  fontsize: 16.0,
+                                ),
+                              ),
 
                               ///Location...
                               CustomText(
@@ -131,11 +142,6 @@ class AllPropertyHomepageCard extends StatelessWidget {
                                 fontsize: 13.0,
                               ),
                               SizedBox(height: 5.0),
-                              const CustomText(
-                                text: "Tk- 105000",
-                                color: Colors.blue,
-                                fontsize: 16.0,
-                              ),
                             ],
                           ),
                         ),

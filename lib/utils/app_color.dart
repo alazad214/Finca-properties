@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColor {
   static const Color bgcolor = Color(0xff000000);
   static const Color baseColor = Color(0xff008080);
@@ -20,4 +22,11 @@ class AppColor {
   static const Color navy_ = Color(0xff244855);
   static const Color navy2 = Color(0xffd0ff00);
   static const Color yollow_ = Color(0xfffffa00);
+}
+
+TextStyle style1(textcolor) {
+  return TextStyle(
+    color: textcolor ?? Colors.red,
+
+  );
 }
