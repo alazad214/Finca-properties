@@ -126,12 +126,11 @@ class Addscreen2 extends StatelessWidget {
                   CustomButton(
                     text: "Continue",
                     ontap: () {
-                      if (formkey.currentState!.validate()) {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
+                      if (formkey.currentState!.validate()) {}
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                     },
                   ),
                 ],

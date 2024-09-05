@@ -9,12 +9,14 @@ import 'package:universe_it_project/utils/app_color.dart';
 import 'package:universe_it_project/widgets/back_app_bar.dart';
 import 'package:universe_it_project/widgets/custom_text.dart';
 
+import '../../../../model/property_model.dart';
+
 class AllPropertyDetails extends StatelessWidget {
-  final dynamic data;
+  final FincaPropertyModel property;
   final controller = Get.put(AllPropertyController());
   final PageController _pageController = PageController();
 
-  AllPropertyDetails({super.key, required this.data});
+  AllPropertyDetails({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
@@ -27,30 +29,63 @@ class AllPropertyDetails extends StatelessWidget {
             ///Properties Images...
             _buildImageSlider(),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ///Properties Title And Location...
                   _buildPropertyTitleAndLocation(),
-                  const SizedBox(height: 15.0),
+                  SizedBox(height: 15.0),
 
                   ///Properies IndoRow...
                   _buildPropertyInfoRow(),
-                  const Divider(color: Colors.black12, height: 20),
+                  Divider(color: Colors.black12, height: 20),
 
                   //Properties Summary
-                  _buildPropertySummary(),
+                  CustomText(text: "PROPERTY SUMMARY"),
+                  Container(
+                    height: 5,
+                    width: 50,
+                    color: Colors.teal,
+                  ),
+                  PropertySemmary(text: "City: ${property.cityName ?? ''}"),
+                  PropertySemmary(
+                      text:
+                          "Property Type: ${property.propertyTypeName ?? ''}"),
+                  PropertySemmary(
+                      text:
+                          "Property Type: ${property.propertyTypeName ?? ''}"),
+                  PropertySemmary(text: "Facing: ${property.facing ?? ''}"),
+                  PropertySemmary(text: "Facing: ${property.facing ?? ''}"),
+                  PropertySemmary(text: "Bedroom: ${property.bedroom ?? ''}"),
+                  PropertySemmary(
+                      text: "Bathrooms: ${property.bathroom ?? ''}"),
+                  PropertySemmary(
+                      text: "Balconies: ${property.balconies ?? ''}"),
+                  PropertySemmary(
+                      text: "Size In Katha: ${property.sizeKatha ?? ''}"),
+                  PropertySemmary(
+                      text: "Apartment Size: ${property.size ?? ''}"),
+                  PropertySemmary(
+                      text: "Status: ${property.constructionStatus ?? ''}"),
+                  PropertySemmary(text: "Garages: ${property.garages ?? ''}"),
+
                   const SizedBox(height: 30.0),
 
                   //Contact Button...
                   _buildContactButtons(),
                   const SizedBox(height: 20.0),
+                  const CustomText(text: "PROPERTY DESCRIPTION"),
+
+                  Container(
+                    height: 5,
+                    width: 50,
+                    color: Colors.teal,
+                  ),
+                  Text(property.description ?? '')
                 ],
               ),
             ),
-            FooterSection()
           ],
         ),
       ),
@@ -68,8 +103,8 @@ class AllPropertyDetails extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: controller.imageList.length,
               itemBuilder: (context, index) {
-                return Image.asset(
-                  controller.imageList[index],
+                return Image.network(
+                  property.featuredImage ?? '',
                   fit: BoxFit.cover,
                 );
               },
@@ -118,14 +153,14 @@ class AllPropertyDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          text: data["title"],
+          text: property.propertyName ?? '',
           fontsize: 20.0,
           maxline: 3,
           color: Colors.teal,
         ),
         const SizedBox(height: 5.0),
         CustomText(
-          text: data["location"],
+          text: property.cityName ?? '',
           fontsize: 16.0,
           color: AppColor.black_,
         ),
@@ -138,11 +173,11 @@ class AllPropertyDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildPropertyInfoContainer(
-          text: "Duplex Housing",
+          text: property.propertyTypeName ?? '',
           color: Colors.blueAccent,
         ),
         _buildPropertyInfoContainer(
-          text: "৳ ${data["price"] ?? "5000"}",
+          text: "৳ ${property.price ?? ''}",
           color: Colors.green,
         ),
       ],
@@ -164,22 +199,6 @@ class AllPropertyDetails extends StatelessWidget {
         text,
         style: const TextStyle(color: Colors.white),
       ),
-    );
-  }
-
-  Widget _buildPropertySummary() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText(text: "PROPERTY SUMMARY"),
-        Container(
-          height: 5,
-          width: 50,
-          color: Colors.teal,
-        ),
-        const SizedBox(height: 10.0),
-        ..._buildPropertySummaryItems(),
-      ],
     );
   }
 

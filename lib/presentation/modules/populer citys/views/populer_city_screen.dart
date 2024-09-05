@@ -55,9 +55,9 @@ class PopulerCityScreen extends StatelessWidget {
                       //Navigate the Details screen
                       return InkWell(
                         onTap: () {
-                          Get.to(() => AllPropertyDetails(
+                         /* Get.to(() => AllPropertyDetails(
                                 data: controller.foundItem[index],
-                              ));
+                              ));*/
                         },
                         child: Container(
                           key: ValueKey(controller.foundItem[index]["Id"]),

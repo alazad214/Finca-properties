@@ -305,10 +305,7 @@ class Addscreen1 extends StatelessWidget {
                   text: "Continue",
                   ontap: () {
                     if (formkey.currentState!.validate()) {
-                      pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+
                       Fluttertoast.showToast(
                         msg:
                             "${addcontroller.addressName.value} ${addcontroller.propertyName.value}",
@@ -316,6 +313,10 @@ class Addscreen1 extends StatelessWidget {
                         gravity: ToastGravity.BOTTOM,
                       );
                     }
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
                   },
                 ),
               ],

@@ -58,8 +58,8 @@ class FavoriteScreen extends StatelessWidget {
                   final item = controller.favoriteItems[index];
                   return GestureDetector(
                     onTap: () {
-                      Get.to(() => AllPropertyDetails(
-                          data: controller.favoriteItems[index]));
+                    /*  Get.to(() => AllPropertyDetails(
+                          data: controller.favoriteItems[index]));*/
                     },
                     child: Container(
                       height: 130,
