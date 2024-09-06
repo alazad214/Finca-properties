@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:universe_it_project/presentation/modules/Privacy/views/privacy_screen.dart';
-import 'package:universe_it_project/presentation/modules/all%20property/view/all_property_screen.dart';
-import 'package:universe_it_project/presentation/modules/blogs/views/blog_item.dart';
-import 'package:universe_it_project/presentation/modules/favourite/view/faviorite_screen.dart';
-import 'package:universe_it_project/presentation/modules/profile/views/profile_screen.dart';
-import '../presentation/modules/contact/views/contact_screen.dart';
+
+import '../app/modules/Privacy/views/privacy_screen.dart';
+import '../app/modules/all property/view/all_property_screen.dart';
+import '../app/modules/blogs/views/blog_item.dart';
+import '../app/modules/contact/views/contact_screen.dart';
+import '../app/modules/favourite/view/faviorite_screen.dart';
+import '../app/modules/profile/views/profile_screen.dart';
 
 final List<Map<String, dynamic>> navItem = [
   {'icon': Icons.person, 'title': 'Profile', 'screen': Profile_Screen ()},

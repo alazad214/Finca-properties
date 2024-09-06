@@ -1,11 +1,13 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import '../presentation/modules/Auth/forget password/views/forget_pass.dart';
-import '../presentation/modules/Auth/signin/view/signinpage.dart';
-import '../presentation/modules/Auth/signup/views/signup_screen.dart';
-import '../presentation/modules/add property/views/add_property_screen.dart';
-import '../presentation/modules/home/home.dart';
-import '../presentation/modules/splash/splash.dart';
-import '../presentation/modules/splash/splash_bindings.dart';
+
+import '../app/modules/Auth/forget password/views/forget_pass.dart';
+import '../app/modules/Auth/signin/view/signinpage.dart';
+import '../app/modules/Auth/signup/views/signup_screen.dart';
+import '../app/modules/add property/views/add_property_screen.dart';
+import '../app/modules/home/home.dart';
+import '../app/modules/splash/splash.dart';
+import '../app/modules/splash/splash_bindings.dart';
+
 
 const String splash = '/splash_screen';
 const String home = '/home_screen';

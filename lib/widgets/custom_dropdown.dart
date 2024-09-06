@@ -1,7 +1,6 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
-
-import '../presentation/modules/search/controller/search_dropdown_controller.dart';
+import '../app/modules/search/controller/search_dropdown_controller.dart';
 
 class DropdownWidget extends StatelessWidget {
   final List<DropDownValueModel> dropDownList;
