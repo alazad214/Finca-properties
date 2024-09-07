@@ -7,10 +7,10 @@ class ReusableTextField extends StatelessWidget {
   final Icon? suffixIcon;
   final void Function()? onTap;
   final int maxLines;
-  final keyboardtype;
-  final formkey;
-  final validation;
-  final onchanged;
+  final TextInputType? keyboardtype;
+  final Key? formkey;
+  final String? Function(String?)? validation;
+  final Function(String)? onchanged;
 
   const ReusableTextField({
     super.key,
@@ -28,25 +28,41 @@ class ReusableTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      readOnly: readOnly,
-      maxLines: maxLines,
-      onChanged: onchanged,
-      keyboardType: keyboardtype,
-      decoration: InputDecoration(
-        hintStyle: TextStyle(color: Colors.black26, fontSize: 12.0),
-        hintText: hintText,
-        border: const OutlineInputBorder(),
-        suffixIcon: suffixIcon,
+    return Padding(
+      padding: const EdgeInsets.only(top: 15.0),
+      child: TextFormField(
+        readOnly: readOnly,
+        maxLines: maxLines,
+        onChanged: onchanged,
+        keyboardType: keyboardtype,
+        decoration: InputDecoration(
+          hintStyle:  TextStyle(color: Colors.black26, fontSize: 12.0),
+          hintText: hintText,
+          border:  OutlineInputBorder(),
+          suffixIcon: suffixIcon,
+          enabledBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.teal), // Normal state border color
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.green), // Focused state border color
+            borderRadius: BorderRadius.circular(8),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.red), // Error state border color
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        onTap: onTap,
+        controller: controller,
+        validator: validation ??
+                (value) {
+              if (value == null || value.isEmpty) {
+                return 'Fields are required';
+              }
+              return null;
+            },
       ),
-      onTap: onTap,
-      controller: controller,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Fields are required';
-        }
-        return null;
-      },
     );
   }
 }

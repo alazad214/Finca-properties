@@ -2,20 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
+import 'package:intl/intl.dart';
 
 class Addpage2Controller extends GetxController {
   final SingleValueDropDownController florController =
       SingleValueDropDownController();
-  final TextEditingController titlecontroller = TextEditingController();
-  final TextEditingController descriptioncontroller = TextEditingController();
-  final TextEditingController mobilecontroller = TextEditingController();
+  final  titlecontroller = TextEditingController();
+  final  descriptioncontroller = TextEditingController();
+  final  mobilecontroller = TextEditingController();
 
-  final RxString selectedDate = ''.obs;
-
-  // Method to update the selected date
-  void setSelectedDate(String date) {
-    selectedDate.value = date;
+  var selectedDate = ''.obs;
+  Future<void> pickDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      selectedDate.value = DateFormat('MM/dd/yyyy').format(picked);
+    }
   }
-
-  
 }

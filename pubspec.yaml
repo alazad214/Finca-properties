@@ -41,7 +41,7 @@ dependencies:
   fluttertoast: ^8.2.6
   cached_network_image: ^3.3.1
   dropdown_button2: ^2.3.9
-  image_picker: ^1.1.2
+  image_picker:
   youtube_player_flutter:
   url_launcher: ^6.3.0
   names_launcher: ^0.0.1
@@ -51,6 +51,8 @@ dependencies:
   iconsax: ^0.0.8
   get_storage: ^2.1.1
   intl: ^0.18.0
+  file_picker: ^8.1.2
+
 
   # For token store
   flutter_secure_storage: ^9.2.2

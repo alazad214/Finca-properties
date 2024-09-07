@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
-import 'package:universe_it_project/widgets/back_app_bar.dart';
-import 'package:universe_it_project/widgets/dropdown.dart';
+
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_dropdown.dart';
 import '../../../../widgets/custom_text.dart';
@@ -25,7 +24,7 @@ class Addscreen1 extends StatelessWidget {
     return Obx(() {
       return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
           child: Form(
             key: formkey,
             child: Column(
@@ -37,10 +36,9 @@ class Addscreen1 extends StatelessWidget {
                   text: 'Basic Information',
                   fontsize: 22.0,
                 ),
-                const CustomTextIcon(text: "Property type"),
-
                 DropdownWidget(
-                  dropDownList: const [
+                  hinttext: 'Property Type',
+                  dropDownList: [
                     DropDownValueModel(
                         name: 'Apartment/Flats', value: "Apartment/Flats"),
                     DropDownValueModel(
@@ -69,29 +67,26 @@ class Addscreen1 extends StatelessWidget {
                   },
                 ),
 
-                const CustomTextIcon(text: "City"),
                 DropdownWidget(
                   dropDownList: const [
                     DropDownValueModel(name: 'Dhaka', value: "Dhaka"),
                     DropDownValueModel(name: 'Thakurgaon', value: "Thakurgaon"),
                     DropDownValueModel(name: 'Chattagram', value: "Chattagram"),
                   ],
-                  hintText: "Select an item",
+                  hinttext: 'Select City',
                   enablesearch: false,
                   controller: controller.typeController,
                 ),
-                const CustomTextIcon(text: "Area"),
                 DropdownWidget(
-                  dropDownList: const [
+                  dropDownList: [
                     DropDownValueModel(name: 'Dhaka', value: "Dhaka"),
                     DropDownValueModel(name: 'Thakurgaon', value: "Thakurgaon"),
                     DropDownValueModel(name: 'Chattagram', value: "Chattagram"),
                   ],
-                  hintText: "Select an item",
+                  hinttext: 'Area',
                   enablesearch: false,
                   controller: controller.typeController,
                 ),
-                const CustomTextIcon(text: "Construction Status"),
                 DropdownWidget(
                   dropDownList: const [
                     DropDownValueModel(name: 'Any', value: "Any"),
@@ -105,13 +100,20 @@ class Addscreen1 extends StatelessWidget {
                         name: 'Almost Ready', value: "Almost Ready"),
                   ],
                   controller: controller.statusController,
-                  hintText: "Select an item",
+                  hinttext: "Construction Status",
                   enablesearch: false,
                   onchanged: (value) {
                     addcontroller.status.value = value.value;
                   },
                 ),
-                const CustomTextIcon(text: "Address"),
+
+                ReusableTextField(
+                  hintText: 'Property name',
+                  controller: controller.propertyNameController,
+                  onchanged: (value) {
+                    addcontroller.propertyName.value = value;
+                  },
+                ),
                 ReusableTextField(
                   hintText: 'Type Address',
                   maxLines: 2,
@@ -121,33 +123,19 @@ class Addscreen1 extends StatelessWidget {
                   },
                 ),
 
-                const CustomTextIcon(text: "Property Name"),
-                ReusableTextField(
-                  hintText: 'Property name',
-                  maxLines: 2,
-                  controller: controller.propertyNameController,
-                  onchanged: (value) {
-                    addcontroller.propertyName.value = value;
-                  },
-                ),
-
-                /// Property Size and pricing...
-                const SizedBox(height: 15.0),
+                SizedBox(height: 15.0),
                 CustomText(
                   text: 'Property Size & Pricing',
                   fontsize: 22.0,
                 ),
-
-                const CustomTextIcon(text: "Property Size in sftd"),
                 ReusableTextField(
-                  hintText: "Property size in sft",
+                  hintText: "Property Size in sftd",
                   keyboardtype: TextInputType.number,
                   controller: controller.sizesftController,
                   onchanged: (value) {
                     addcontroller.size.value = value;
                   },
                 ),
-                const CustomTextIcon(text: "Price per sft"),
                 ReusableTextField(
                   hintText: "Price per sft",
                   keyboardtype: TextInputType.number,
@@ -157,25 +145,22 @@ class Addscreen1 extends StatelessWidget {
                   },
                 ),
 
-                const CustomTextIcon(text: "Utility & Other Cost"),
                 ReusableTextField(
-                  hintText: 'If any other costs',
+                  hintText: 'Utility & Other Cost',
                   keyboardtype: TextInputType.number,
                   controller: controller.utilitytController,
                   onchanged: (value) {
                     addcontroller.utilityCost.value = value;
                   },
                 ),
-                const CustomTextIcon(text: "Total Price"),
                 ReusableTextField(
-                  hintText: 'Total price',
+                  hintText: 'Total Price',
                   keyboardtype: TextInputType.number,
                   controller: controller.priceController,
                   onchanged: (value) {
                     addcontroller.totalPrice.value = value;
                   },
                 ),
-                const SizedBox(height: 15.0),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Row(
@@ -224,65 +209,56 @@ class Addscreen1 extends StatelessWidget {
 
                 // BEDROOM
                 if (controller.propertyvalue.value) ...[
-                  const CustomText(text: "Property Basic Features"),
                   const SizedBox(height: 5.0),
-                  const CustomTextIcon(text: "Bedroom"),
                   DropdownWidget(
                     dropDownList: const [
                       DropDownValueModel(name: '1', value: "1"),
                       DropDownValueModel(name: '2', value: "2"),
                       DropDownValueModel(name: '3', value: "3"),
                       DropDownValueModel(name: '4', value: "4"),
-                      DropDownValueModel(name: '5', value: "5"),
+                      DropDownValueModel(name: '5+', value: "5+"),
                     ],
-                    hintText: "Select an item",
+                    hinttext: "Bedroom",
                     enablesearch: false,
                     controller: controller.bedroomController,
                     onchanged: (value) {
                       addcontroller.Bedroom.value = value.value;
                     },
                   ),
-                  const SizedBox(height: 15.0),
-
-                  // BATHROOM
-                  const CustomTextIcon(text: "Bathroom"),
                   DropdownWidget(
                     dropDownList: const [
                       DropDownValueModel(name: '1', value: "1"),
                       DropDownValueModel(name: '2', value: "2"),
                       DropDownValueModel(name: '3', value: "3"),
                       DropDownValueModel(name: '4', value: "4"),
+                      DropDownValueModel(name: '5+', value: "5+"),
                     ],
-                    hintText: "Select an item",
+                    hinttext: "Bathroom",
                     enablesearch: false,
                     controller: controller.bathroomController,
                     onchanged: (value) {
                       addcontroller.Bathroom.value = value.value;
                     },
                   ),
-                  const SizedBox(height: 15.0),
-
-                  // BALCONIES
-                  const CustomTextIcon(text: "Balconies"),
                   DropdownWidget(
-                    dropDownList: const [
+                    dropDownList: [
                       DropDownValueModel(name: '1', value: "1"),
                       DropDownValueModel(name: '2', value: "2"),
                       DropDownValueModel(name: '3', value: "3"),
                       DropDownValueModel(name: '4', value: "4"),
+                      DropDownValueModel(name: '5+', value: "5+"),
                     ],
-                    hintText: "Select an item",
+                    hinttext: "Balconies",
                     enablesearch: false,
                     controller: controller.belconisController,
                     onchanged: (value) {
                       addcontroller.Belconis.value = value.value;
                     },
                   ),
-                  const SizedBox(height: 15.0),
                 ],
 
                 // GARAGES
-                const CustomTextIcon(text: "Garages"),
+
                 DropdownWidget(
                   dropDownList: const [
                     DropDownValueModel(name: 'No Parking', value: "No Parking"),
@@ -290,8 +266,9 @@ class Addscreen1 extends StatelessWidget {
                     DropDownValueModel(name: '2', value: "2"),
                     DropDownValueModel(name: '3', value: "3"),
                     DropDownValueModel(name: '4', value: "4"),
+                    DropDownValueModel(name: '5+', value: "5+"),
                   ],
-                  hintText: "Select an item",
+                  hinttext: "Garages",
                   enablesearch: false,
                   controller: controller.garagesController,
                   onchanged: (value) {
@@ -305,7 +282,6 @@ class Addscreen1 extends StatelessWidget {
                   text: "Continue",
                   ontap: () {
                     if (formkey.currentState!.validate()) {
-
                       Fluttertoast.showToast(
                         msg:
                             "${addcontroller.addressName.value} ${addcontroller.propertyName.value}",

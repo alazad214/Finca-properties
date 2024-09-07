@@ -1,40 +1,49 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../widgets/backFlotingActionButto.dart';
 import '../../../../widgets/custom_button.dart';
+import '../../../../widgets/custom_text.dart';
 import '../controller/addController3.dart';
+import '../widgets/textfield_custom.dart';
 
 class Addscreen3 extends StatelessWidget {
   final PageController pageController;
   Addscreen3({super.key, required this.pageController});
 
-  ///Controller...
   final controller = Get.put(Addcontroller3());
-
-  ///GlobalKey...
   final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Obx(() {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
             child: Form(
               key: formkey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 30.0),
-
-                  // Featured Image
+                  CustomText(
+                    text: 'Property Basic Features',
+                    fontsize: 22.0,
+                  ),
+                  SizedBox(height: 20.0),
                   Text(
                     'Featured Image',
                     style: TextStyle(
                       color: Colors.purple,
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  Text(
+                    "Main property image, shown in thumbnail and key spots. (1080x720)",
+                    style: TextStyle(color: Colors.black26),
                   ),
                   SizedBox(height: 8),
                   GestureDetector(
@@ -58,7 +67,9 @@ class Addscreen3 extends StatelessWidget {
                           Flexible(
                             child: Text(
                               overflow: TextOverflow.ellipsis,
-                              controller.fileName.value,
+                              controller.fileName.value.isNotEmpty
+                                  ? controller.fileName.value
+                                  : 'No file selected',
                               style: TextStyle(color: Colors.grey),
                             ),
                           ),
@@ -66,12 +77,7 @@ class Addscreen3 extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
-                    "This is going to be the main image of your property, which will be displayed in thumbnail and all other important places. (aspect ratio 1080X720)",
-                    style: TextStyle(color: Colors.black26),
-                  ),
-
-                  // Gallery Images
+                  SizedBox(height: 20.0),
                   Text(
                     'Upload your gallery images',
                     style: TextStyle(
@@ -88,66 +94,104 @@ class Addscreen3 extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-
+                  GestureDetector(
+                    onTap: controller.pickFiles,
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 50,
+                            padding: EdgeInsets.all(5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(color: Colors.black26),
+                            child: Text("Choose Files"),
+                          ),
+                          SizedBox(width: 16),
+                          Obx(() {
+                            final files = controller.selectedFiles;
+                            return Flexible(
+                              child: Text(
+                                files.isNotEmpty
+                                    ? '${files.length} files selected'
+                                    : 'No files selected',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  ),
                   Obx(() {
-                    return ListView.builder(
+                    return GridView.builder(
                       shrinkWrap: true,
+                      primary: false,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.imageList.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 4,
+                        mainAxisSpacing: 4,
+                      ),
+                      itemCount: controller.selectedFiles.length,
                       itemBuilder: (context, index) {
-                        return Column(
+                        final file = controller.selectedFiles[index];
+                        return Stack(
                           children: [
-                            GestureDetector(
-                              onTap: () => controller.pickImage(index),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Row(
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () => controller.pickImage(index),
-                                      child: Text('Choose File'),
-                                      style: ElevatedButton.styleFrom(
-                                        padding: EdgeInsets.symmetric(horizontal: 20),
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: Text(
-                                        controller.imageList[index].isNotEmpty
-                                            ? controller.imageList[index]
-                                            : 'No file chosen',
-                                        style: TextStyle(color: Colors.grey),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () => controller.removeImageContainer(index),
-                                      child: Text('Remove'),
-                                      style: ElevatedButton.styleFrom(),
-                                    ),
-                                  ],
+                            Container(
+                              height: 100,
+                              width: screenSize.width / 4,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                  color: Colors.teal,
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: Image.file(
+                                File(file.path!),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              top: 4,
+                              right: 4,
+                              child: GestureDetector(
+                                onTap: () {
+                                  controller.removeFile(file);
+                                },
+                                child: Icon(
+                                  Icons.remove_circle,
+                                  color: Colors.red,
+                                  size: 24,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 16),
                           ],
                         );
                       },
                     );
                   }),
-                  ElevatedButton(
-                    onPressed: controller.addImageContainer,
-                    child: Text('Add Another Image'),
-                    style: ElevatedButton.styleFrom(),
+                  ReusableTextField(
+                    hintText: 'Note: YouTube video embed code',
+                    keyboardtype: TextInputType.phone,
+                    onchanged: (value) {},
                   ),
-                  SizedBox(height: 20.0),
-
-                  // Post Now Button
+                  ReusableTextField(
+                    hintText: 'Note: Google map embed url',
+                    keyboardtype: TextInputType.phone,
+                    onchanged: (value) {},
+                  ),
+                  SizedBox(height: 30.0),
+                  Text(
+                    'If all of the required fields data are filled than click Submit.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                    ),
+                  ),
                   CustomButton(
                     text: "Post Now",
                     ontap: () {
