@@ -6,7 +6,7 @@ import '../add property/views/add_home_card.dart';
 import '../all property/view/all_property_homePage_card.dart';
 import '../blogs/views/blog_card.dart';
 import '../client review/views/review_card.dart';
-import '../favourite/view/favourite_card.dart';
+
 import '../header/views/header_view.dart';
 import '../populer citys/views/populer_city_card.dart';
 
@@ -51,12 +51,11 @@ class Home extends StatelessWidget {
                     ],
                   ),
                   child: Padding(
-                    padding:  EdgeInsets.symmetric(vertical: 20),
+                    padding: EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
                         AddHomeCard(),
                         AllPropertyHomepageCard(),
-                        FavouriteCard(),
                         BlogCard(),
                         PopulerCity(),
                         ReviewCard(),
@@ -70,7 +69,7 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
-      drawer:  CustomDrawer(),
+      drawer: CustomDrawer(),
     );
   }
 }

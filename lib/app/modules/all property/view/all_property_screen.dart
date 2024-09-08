@@ -4,14 +4,12 @@ import 'package:universe_it_project/widgets/custom_textfield3.dart';
 import '../../../../controller/property_list_controller.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../widgets/custom_text.dart';
-import '../contoller/favorte_controller.dart';
 import '../contoller/search_controller.dart';
 import 'all_property_details.dart';
-
 class AllPropertyScreen extends StatelessWidget {
   AllPropertyScreen({super.key});
   final controller = Get.put(AllSearchController());
-  final favoriteController = Get.put(FavoriteController());
+
   final propertyController = Get.put(FincaPropertyController());
 
   @override
@@ -67,8 +65,6 @@ class AllPropertyScreen extends StatelessWidget {
                             final item = controller.foundItem[index];
                             final property =
                                 propertyController.propertyList[index];
-                            final isFavorite = favoriteController.favoriteItems
-                                .any((fav) => fav['Id'] == item['Id']);
 
                             // Navigate to Details screen
                             return InkWell(
@@ -106,27 +102,6 @@ class AllPropertyScreen extends StatelessWidget {
                                             fit: BoxFit.cover,
                                             height: double.infinity,
                                           ),
-                                        ),
-                                        Positioned(
-                                          top: 10,
-                                          right: 10,
-                                          child: Obx(() {
-                                            bool isFavorite = favoriteController
-                                                .isFavorite(item['id']);
-                                            return GestureDetector(
-                                              onTap: () {
-                                                favoriteController
-                                                    .toggleFavorite(item);
-                                              },
-                                              child: Icon(
-                                                isFavorite
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_border,
-                                                color: Colors.red,
-                                                size: 30.0,
-                                              ),
-                                            );
-                                          }),
                                         ),
                                         Positioned(
                                           bottom: 10,

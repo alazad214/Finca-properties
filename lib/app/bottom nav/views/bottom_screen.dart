@@ -35,8 +35,8 @@ class BottomNavScreen extends StatelessWidget {
                 label: 'Blog',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Iconsax.heart),
-                label: 'Faviorite',
+                icon: Icon(Icons.calendar_today),
+                label: 'Booking',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:universe_it_project/widgets/custom_textfield3.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../widgets/custom_text.dart';
-import '../../all property/contoller/favorte_controller.dart';
+
 import '../../all property/contoller/search_controller.dart';
 
 class PopulerCityScreen extends StatelessWidget {
   PopulerCityScreen({super.key});
   final controller = Get.put(AllSearchController());
-  final favoriteController = Get.put(FavoriteController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +46,11 @@ class PopulerCityScreen extends StatelessWidget {
                     itemCount: controller.foundItem.length,
                     itemBuilder: (context, index) {
                       final item = controller.foundItem[index];
-                      // ignore: unused_local_variable
-                      final isFavorite = favoriteController.favoriteItems
-                          .any((fav) => fav['Id'] == item['Id']);
 
                       //Navigate the Details screen
                       return InkWell(
                         onTap: () {
-                         /* Get.to(() => AllPropertyDetails(
+                          /* Get.to(() => AllPropertyDetails(
                                 data: controller.foundItem[index],
                               ));*/
                         },
@@ -86,22 +82,6 @@ class PopulerCityScreen extends StatelessWidget {
                                     fit: BoxFit.cover,
                                     height: 140,
                                   ),
-                                  Obx(() {
-                                    bool isFavorite = favoriteController
-                                        .isFavorite(item['id']);
-                                    return IconButton(
-                                      onPressed: () {
-                                        favoriteController.toggleFavorite(item);
-                                      },
-                                      icon: Icon(
-                                        isFavorite
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: Colors.red,
-                                        size: 35.0,
-                                      ),
-                                    );
-                                  }),
                                   Positioned(
                                       left: 0,
                                       bottom: 10,

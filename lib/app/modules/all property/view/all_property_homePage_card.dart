@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:universe_it_project/widgets/custom_card.dart';
 import '../../../../controller/property_list_controller.dart';
 import '../../../../widgets/custom_text.dart';
-import '../contoller/favorte_controller.dart';
 import '../utils/property_data.dart';
 import '../widgets/see_all_line.dart';
 import 'all_property_details.dart';
 
 class AllPropertyHomepageCard extends StatelessWidget {
   AllPropertyHomepageCard({super.key});
-  final favoriteController = Get.put(FavoriteController());
+
   final propertyController = Get.put(FincaPropertyController());
 
   @override
@@ -38,9 +36,7 @@ class AllPropertyHomepageCard extends StatelessWidget {
                   itemBuilder: (_, index) {
                     final item = propertyData[index];
                     final property = propertyController.propertyList[index];
-                    // ignore: unused_local_variable
-                    final isFavorite = favoriteController.favoriteItems
-                        .any((fav) => fav['Id'] == item['Id']);
+
                     return InkWell(
                       onTap: () {
                         Get.to(() => AllPropertyDetails(property: property));
@@ -71,27 +67,6 @@ class AllPropertyHomepageCard extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
-
-                                ///Favorite Icon...
-                                Positioned(
-                                  right: 0,
-                                  child: Obx(() {
-                                    bool isFavorite = favoriteController
-                                        .isFavorite(item['id']);
-                                    return IconButton(
-                                      onPressed: () {
-                                        favoriteController.toggleFavorite(item);
-                                      },
-                                      icon: Icon(
-                                        isFavorite
-                                            ? Iconsax.heart5
-                                            : Iconsax.heart,
-                                        color: Colors.red,
-                                        size: 30.0,
-                                      ),
-                                    );
-                                  }),
                                 ),
 
                                 ///Property Type ...

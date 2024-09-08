@@ -15,7 +15,7 @@ class Addcontroller3 extends GetxController {
     }
   }
 
-  /// Pick multiple files from the gallery
+
   var selectedFiles = [].obs;
   Future<void> pickFiles() async {
     final result = await FilePicker.platform.pickFiles(
