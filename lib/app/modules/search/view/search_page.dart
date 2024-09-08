@@ -1,132 +1,162 @@
-import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:universe_it_project/app/modules/search/view/search_result.dart';
-import 'package:universe_it_project/widgets/custom_button.dart';
-import '../../../../widgets/custom_dropdown.dart';
-import '../../add property/widgets/custom_text_icon.dart';
-import '../../add property/widgets/textfield_custom.dart';
-import '../controller/search_dropdown_controller.dart';
 
-class SearchPage extends StatelessWidget {
-  SearchPage({super.key});
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
 
-  final _controller = Get.put(SearchDropdownController());
-  final TextEditingController locationcontroller = TextEditingController();
-  final locationController = SingleValueDropDownController();
-  final locationformkey = GlobalKey<FormState>();
+class _SearchPageState extends State<SearchPage> {
+  String? selectedLocation;
+  String? selectedPropertyType;
+
+  List<String> locations = [
+    'Dhaka',
+    'Chittagong',
+    'Khulna',
+    'Sylhet',
+    'Rajshahi'
+  ];
+
+  List<String> propertyTypes = [
+    'Apartment/Flats',
+    'Independent House',
+    'Duplex/Home',
+    'Shop/Restaurant',
+    'Office Space',
+    'Residential Space',
+    'Commercial Plot',
+    'Agriculture/Firm'
+  ];
+
+  List searchResults = [];
+
+  void performSearch() {
+    setState(() {
+      searchResults =
+          locations.where((location) => location == selectedLocation).toList();
+    });
+    Fluttertoast.showToast(
+        msg: 'Searching for $selectedLocation and $selectedPropertyType');
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Search'),
-        backgroundColor: Colors.teal,
-        titleSpacing: 0,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Keyword
-              const CustomTextIcon(text: "Search Keyword"),
-              const ReusableTextField(
-                hintText: 'Enter your search keyword',
-                maxLines: 1,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(10.0)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Search your PROPERTIES here',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 15.0),
-
-              // Property Category
-              const CustomTextIcon(text: "Property Category"),
-              DropdownWidget(
-                dropDownList: const [
-                  DropDownValueModel(
-                      name: 'Apartment/Flats', value: "Apartment/Flats"),
-                  DropDownValueModel(
-                      name: 'Independent House', value: "Independent House"),
-                  DropDownValueModel(name: 'Duplex/Home', value: "Duplex/Home"),
-                  DropDownValueModel(
-                      name: 'Shop/Restaurant', value: "Shop/Restaurant"),
-                  DropDownValueModel(
-                      name: 'Office Space', value: "Office Space"),
-                  DropDownValueModel(
-                      name: 'Industrial Space', value: "Industrial Space"),
-                  DropDownValueModel(
-                      name: 'Residential Plot', value: "Residential Plot"),
-                  DropDownValueModel(
-                      name: 'Commercial Plot', value: "Commercial Plot"),
-                  DropDownValueModel(
-                      name: 'Agriculture/Firm', value: "Agriculture/Firm"),
+            ),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: DropdownButtonFormField<String>(
+                      value: selectedLocation,
+                      hint: Text('Location'),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLocation = value;
+                        });
+                      },
+                      items: locations.map((location) {
+                        return DropdownMenuItem(
+                          value: location,
+                          child: Text(location),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        border: InputBorder.none, // Remove the border
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      isExpanded: true,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: DropdownButtonFormField<String>(
+                      value: selectedPropertyType,
+                      hint: Text('Property Type'),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedPropertyType = value;
+                        });
+                      },
+                      items: propertyTypes.map((property) {
+                        return DropdownMenuItem<String>(
+                          value: property,
+                          child: Text(
+                            property,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        border: InputBorder.none, // Remove the border
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      isExpanded: true,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        if (selectedLocation != null &&
+                            selectedPropertyType != null) {
+                          performSearch();
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text(
+                                    'Please select both location and property type'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  ),
                 ],
-                hintText: "Select a category",
-                enablesearch: false,
-                onchanged: (val) {
-                  _controller.statusSelectedValue.value = val.value;
-                },
               ),
-              const SizedBox(height: 15.0),
-
-              // Construction Status
-              const CustomTextIcon(text: "Construction Status"),
-              DropdownWidget(
-                dropDownList: const [
-                  DropDownValueModel(name: 'Any', value: "Any"),
-                  DropDownValueModel(name: 'Ready', value: "Ready"),
-                  DropDownValueModel(
-                      name: 'Under Construction', value: "Under Construction"),
-                  DropDownValueModel(name: 'Used', value: "Used"),
-                  DropDownValueModel(name: 'Upcoming', value: "Upcoming"),
-                  DropDownValueModel(
-                      name: 'Almost Ready', value: "Almost Ready"),
-                ],
-                hintText: "Select a status",
-                enablesearch: false,
-                onchanged: (val) {
-                  _controller.statusSelectedValue.value = val.value;
-                },
-              ),
-              const SizedBox(height: 15.0),
-
-              // Location
-              const CustomTextIcon(text: "Location"),
-              Form(
-                key: locationformkey,
-                child: DropdownWidget(
-                  dropDownList: const [
-                    DropDownValueModel(name: 'Dhaka', value: "Dhaka"),
-                    DropDownValueModel(name: 'Chittagong', value: "Chittagong"),
-                    DropDownValueModel(name: 'Sylhet', value: "Sylhet"),
-                    DropDownValueModel(name: 'Rajshahi', value: "Rajshahi"),
-                    DropDownValueModel(name: 'Khulna', value: "Khulna"),
-                    DropDownValueModel(name: 'Barisal', value: "Barisal"),
-                    DropDownValueModel(name: 'Rangpur', value: "Rangpur"),
-                    DropDownValueModel(name: 'Mymensingh', value: "Mymensingh"),
-                    DropDownValueModel(name: 'Jashore', value: "Jashore"),
-                    DropDownValueModel(name: 'Tangail', value: "Tangail"),
-                  ],
-                  hintText: "Select a location",
-                  onchanged: (location) {
-                    _controller.locationSelectedValue.value = location.value;
-                  },
-                  controller: locationController,
-                ),
-              ),
-              const SizedBox(height: 30.0),
-
-              // Search Button
-              CustomButton(
-                text: "Search Now",
-                ontap: () {
-                  if (locationformkey.currentState!.validate()) {
-                    Get.to(() => SearchResult());
-                  }
-                },
-              ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

@@ -6,6 +6,7 @@ import '../../../../utils/app_color.dart';
 import '../../../../widgets/custom_text.dart';
 import '../contoller/search_controller.dart';
 import 'all_property_details.dart';
+
 class AllPropertyScreen extends StatelessWidget {
   AllPropertyScreen({super.key});
   final controller = Get.put(AllSearchController());
