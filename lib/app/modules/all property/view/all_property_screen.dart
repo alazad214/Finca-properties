@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universe_it_project/app/modules/search/view/filter_search.dart';
+import 'package:universe_it_project/widgets/custom_search_bar.dart';
 import 'package:universe_it_project/widgets/custom_textfield3.dart';
 import '../../../../controller/property_list_controller.dart';
 import '../../../../utils/app_color.dart';
@@ -37,24 +39,13 @@ class AllPropertyScreen extends StatelessWidget {
               child: SafeArea(
                 child: Column(
                   children: [
-                    // Search Location
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomTextfield3(
-                            onchanged: (value) {
-                              controller.runFilter(value);
-                            },
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.search,
-                              color: AppColor.baseColor),
-                        ),
-                      ],
+                    CustomSearchBar(
+                      ontap: () {
+                        Get.to(() => FilterScreen());
+                      },
                     ),
-                    const SizedBox(height: 15.0),
+
+                    SizedBox(height: 15.0),
                     // All properties list
                     Expanded(
                       child: Obx(
